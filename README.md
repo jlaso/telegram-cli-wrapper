@@ -10,4 +10,10 @@ After that, start telegram-cli as a daemon from the root of the tg repo.
 
 ./bin/telegram-cli --json -dWS /tmp/tg.sck &
 
+Once installed vysheng/tg clone this project with:
 
+```git clone https://github.com/jlaso/telegram-cli-wrapper.git```
+
+Run ```composer install``` inside the folder repo in order to create autoload files.
+
+Take a look on test.php to see how easy is to send messages.

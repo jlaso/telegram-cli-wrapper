@@ -16,4 +16,10 @@ Once installed vysheng/tg clone this project with:
 
 Run ```composer install``` inside the folder repo in order to create autoload files.
 
-Take a look on test.php to see how easy is to send messages.
+Take a look on test folder to see how easy is to use the wrapper.
+
+If you don't want to have started telegram-cli you can use TelegramCliHelper in order to start it automatically each time
+is needed. To do that you need to create a config.ini in the config folder (you have config.ini.dis as a template)
+
+All the examples in the test folder use this Helper.
+

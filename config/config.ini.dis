@@ -1,0 +1,5 @@
+[cli]
+path=/usr/local/bin/tg
+socket=/tmp/tg.sck
+params="--json -dWS"
+debug=true

@@ -7,6 +7,9 @@
 
 namespace TelegramCliWrapper;
 
+use TelegramCliWrapper\Models\Dialog;
+use TelegramCliWrapper\Models\User;
+
 class TelegramCliWrapper
 {
     /** @var bool */
@@ -37,6 +40,8 @@ class TelegramCliWrapper
         if (false === $this->socket) {
             throw new \Exception(sprintf('Could not connect to socket "%s"', $telegramSocket));
         }
+        // need to get dialog list in order that the rest of functions work
+        $this->dialog_list();
     }
 
     public function __destruct()
@@ -48,12 +53,22 @@ class TelegramCliWrapper
         'status_online' => array(),
         'status_offline' => array(),
         'contact_list' => array(),
+        'get_self' => array(),
+        'stats' => array(),
+        'quit' => array(),
         'send_typing' => array(),
+        //sends message to the peer
         'msg' => array(
             'peer' => self::PEER_ARG,
             'msg' => self::MSG_ARG,
         ),
         'del_contact' => array(
+            'peer' => self::PEER_ARG,
+        ),
+        'delete_msg' => array(
+            'msg_seqno' => self::MSG_ARG,
+        ),
+        'delete_history' => array(
             'peer' => self::PEER_ARG,
         ),
         'chat_delete_user' => array(
@@ -62,9 +77,7 @@ class TelegramCliWrapper
         'mark_read' => array(
             'peer' => self::PEER_ARG,
         ),
-        'dialog_list' => array(
-            'peer' => self::PEER_ARG,
-        ),
+        'dialog_list' => array(),
         'chat_info' => array(
             'peer' => self::PEER_ARG,
         ),
@@ -268,6 +281,57 @@ class TelegramCliWrapper
     protected function formatFileName($fileName)
     {
         return $this->escapeStringArgument(realpath($fileName));
+    }
+
+    /**
+     * return the list of users with active dialogs
+     *
+     * @return User[]
+     */
+    public function getDialogList()
+    {
+        $dialogList = $this->dialog_list();
+
+        return User::fromArray($dialogList);
+    }
+
+    /**
+     * return the list of dialogs of the peer passed
+     * recover messages mark it as read
+     *
+     * @param string $peer
+     * @return Dialog[]
+     */
+    public function getHistory($peer, $numMsgs)
+    {
+        $history = $this->history($peer, $numMsgs);
+
+        return Dialog::fromArray($history);
+    }
+
+    /**
+     * @return User
+     */
+    public function whoAmI()
+    {
+        return new User($this->get_self());
+    }
+
+    /**
+     * @param string $peer
+     * @return User
+     */
+    public function getUserInfo($peer)
+    {
+        return new User($this->user_info($peer));
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getContactList()
+    {
+        return User::fromArray($this->contact_list());
     }
 
 }

@@ -29,6 +29,7 @@ class TelegramCliWrapper
     const SURNAME_ARG = 6;
     const PHONE_ARG = 7;
     const NUMBER_ARG = 8;
+    const URL_ARG = 9;
 
     /**
      * TelegramCliWrapper constructor.
@@ -106,6 +107,10 @@ class TelegramCliWrapper
             'name' => self::NAME_ARG,
             'surname' => self::SURNAME_ARG,
         ),
+        'send_photo' => array(
+            'peer' => self::PEER_ARG,
+            'photo' => self::URL_ARG,
+        ),
         'add_contact' => array(
             'phone' => self::PHONE_ARG,
             'name' => self::NAME_ARG,
@@ -170,6 +175,9 @@ class TelegramCliWrapper
                         case self::SURNAME_ARG:
                         case self::TITLE_ARG:
                             $arguments[] = $this->escapeStringArgument(array_shift($args));
+                            break;
+                        case self::URL_ARG:
+                            $arguments[] = array_shift($args);
                             break;
                     }
                 }
@@ -332,6 +340,15 @@ class TelegramCliWrapper
     public function getContactList()
     {
         return User::fromArray($this->contact_list());
+    }
+
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function addContact(User $user)
+    {
+        return $this->add_contact($user->phone, $user->first_name, $user->last_name);
     }
 
 }

@@ -3,3 +3,8 @@ path=/usr/local/bin/tg
 socket=/tmp/tg.sck
 params="--json -dWS"
 debug=true
+
+[weather]
+appid=12341234123412341234123412341234
+city=valencia
+country=es

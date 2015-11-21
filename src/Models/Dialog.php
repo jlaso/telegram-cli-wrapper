@@ -82,4 +82,14 @@ class Dialog extends BasicObject
 
         return $result;
     }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
 }

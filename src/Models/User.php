@@ -13,6 +13,10 @@ class User extends BasicObject
     public $last_name;
     public $first_name;
     public $phone;
+    // the code to log in
+    public $code;
+    // indicates that the user has used the code to log in
+    public $logged;
 
     public static function getTitles()
     {
@@ -58,5 +62,30 @@ class User extends BasicObject
 
         return $result;
     }
+
+    /**
+     * @param string $phone
+     * @param string $firstName
+     * @param string $lastName
+     * @return User
+     */
+    public static function createUser($phone, $firstName, $lastName)
+    {
+        $user = new static();
+        $user->first_name = $firstName;
+        $user->last_name = $lastName;
+        $user->phone = $phone;
+
+        return $user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->phone;
+    }
+
 
 }

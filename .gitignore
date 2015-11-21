@@ -2,4 +2,6 @@ vendor
 composer.lock
 .idea
 config/config.ini
+data/user
+data/*.json
 

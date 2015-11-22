@@ -65,6 +65,7 @@ switch ($text) {
         $userStorage->remove($user->phone);
         unset($_SESSION['user']);
         header("location: index.php");
+        die;
         break;
     case "send me a photo":
         $t->send_photo($user->phone, MediaSelector::getRandomPicture());

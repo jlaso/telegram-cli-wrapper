@@ -15,7 +15,7 @@ class TelegramCliHelper
     protected $config;
     /** @var int */
     protected $pid = null;
-    /** @var bool  */
+    /** @var bool */
     protected $debug = false;
 
     protected static $instance = null;
@@ -29,14 +29,17 @@ class TelegramCliHelper
         $this->config = $config["cli"];
         $this->debug = isset($this->config['debug']) && $this->config['debug'];
 
-        $cmd = sprintf("%s/bin/telegram-cli -k %s/tg-server.pub %s %s & echo $!", $this->config['path'], $this->config['path'], $this->config['params'], $this->config['socket']);
-        if ($this->debug) {
-            print "{$cmd}\n";
-        }
-        $lines = exec($cmd);
-        $this->pid = intval($lines);
-        if ($this->debug) {
-            print "telegram-cli started with pid {$this->pid}\n";
+        // check if is an instance of telegram-cli already running
+        if (false === @fsockopen($this->getSocket())) {
+            $cmd = sprintf("%s/bin/telegram-cli -k %s/tg-server.pub %s %s & echo $!", $this->config['path'], $this->config['path'], $this->config['params'], $this->config['socket']);
+            if ($this->debug) {
+                print "{$cmd}\n";
+            }
+            $lines = exec($cmd);
+            $this->pid = intval($lines);
+            if ($this->debug) {
+                print "telegram-cli started with pid {$this->pid}\n";
+            }
         }
     }
 
@@ -76,11 +79,13 @@ class TelegramCliHelper
      */
     function __destruct()
     {
-        /**
-         * have to called twice in order to kill all the telegram-cli instances created
-         */
-        exec("killall telegram-cli");
-        exec("killall telegram-cli");
+        if ($this->pid) {
+            /**
+             * have to called twice in order to kill all the telegram-cli instances created
+             */
+            exec("killall telegram-cli");
+            exec("killall telegram-cli");
+        }
     }
 
 

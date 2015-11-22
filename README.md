@@ -14,6 +14,11 @@ After that, start telegram-cli as a daemon from the root of the tg repo.
 You can try to use that one to install telegram-cli as a daemon in your server (I was unable to do)
 https://github.com/vysheng/tg/wiki/Running-Telegram-CLI-as-Daemon
 
+###Notes
+Basically you have to create a group telegram and add users www-data (or apache), root (or the user you use to access through ssh) and telegramd.
+give permissions to /tmp/tg.sck to that group (telegram)
+You can start telegram-cli manually following the above order or just let the script to start it.
+
 ##Install
 Once installed vysheng/tg clone this project with:
 

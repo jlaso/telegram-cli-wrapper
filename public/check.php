@@ -53,7 +53,7 @@ switch ($text) {
         $weather = new OpenWeatherApi();
         $response = $weather->getWeatherInfoAsString();
         break;
-    case "send me the time":
+    case "say me the time":
         $response = sprintf("The current time here is %s", date("l, F jS Y h:ia"));
         break;
     case "tell me a joke":

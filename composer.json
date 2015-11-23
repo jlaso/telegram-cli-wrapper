@@ -1,4 +1,17 @@
 {
+  "name": "jlaso/telegram-cli-wrapper",
+  "description": "wrapper to telegram-cli",
+  "type": "library",
+  "homepage": "https://github.com/jlaso/telegram-cli-wrapper",
+  "authors": [
+    {
+      "name": "Joseluis Laso",
+      "email": "jlaso@joseluislaso.es",
+      "homepage": "http://www.joseluislaso.es",
+      "role": "Developer"
+    }
+  ],
+  "license" : "MIT",
   "autoload": {
     "psr-4": {
       "TelegramCliWrapper\\": "src/"

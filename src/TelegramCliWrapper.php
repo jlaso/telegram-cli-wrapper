@@ -208,6 +208,11 @@ class TelegramCliWrapper
             return;
         }
         $format = array_shift($args);
+        foreach ($args as $k=>$arg) {
+            if (!is_string($arg)) {
+                $args[$k] = print_r($arg, true);
+            }
+        }
         vprintf($format, $args);
     }
 
